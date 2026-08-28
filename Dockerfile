@@ -14,4 +14,6 @@ RUN addgroup -S attendance && adduser -S attendance -G attendance
 COPY --from=build /build/target/*.jar app.jar
 USER attendance
 EXPOSE 8081
+HEALTHCHECK --interval=30s --timeout=5s --start-period=40s --retries=3 \
+    CMD wget -qO- http://localhost:8081/actuator/health | grep -q '"status":"UP"' || exit 1
 ENTRYPOINT ["java", "-XX:MaxRAMPercentage=75", "-jar", "app.jar"]

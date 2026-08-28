@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    url: ${TEST_DB_URL:jdbc:postgresql://localhost:5432/attendance_test_db}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:underadmin}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+    clean-disabled: false
+
+app:
+  jwt:
+    secret: test-secret-key-for-integration-tests-at-least-32-bytes-long
+    access-token-minutes: 15
+    refresh-token-days: 7
+  seed:
+    enabled: false
+
+logging:
+  level:
+    com.attendance.api: INFO

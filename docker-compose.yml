@@ -33,7 +33,7 @@ services:
       APP_CORS_ORIGINS: http://localhost:4200
       APP_SEED_ENABLED: "true"
     ports:
-      - "8081:8081"
+      - "8080:8080"
     # Opt in with:  docker compose up --build api
     profiles: ["api"]
 

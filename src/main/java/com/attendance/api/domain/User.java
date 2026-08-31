@@ -25,6 +25,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 
 @Entity
 @Table(name = "users")
@@ -40,8 +42,10 @@ public class User {
     @Column(name = "id", nullable = false, updatable = false)
     private UUID id;
 
-
-    /** Null only for SUPER_ADMIN, which is platform-scoped rather than tenant-scoped. */
+    /**
+     * Null only for SUPER_ADMIN, which is platform-scoped rather than
+     * tenant-scoped.
+     */
     @Nullable
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "organization_id")
@@ -63,7 +67,10 @@ public class User {
     @Column(name = "role", nullable = false, length = 20)
     private Role role;
 
-    /** Approval chain parent: leave requests route here before reaching an org admin. */
+    /**
+     * Approval chain parent: leave requests route here before reaching an org
+     * admin.
+     */
     @Nullable
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "manager_id")
@@ -83,6 +90,16 @@ public class User {
     private Instant updatedAt;
 
     @PrePersist
+    void onCreate() {
+        Instant now = Instant.now();
+        this.createdAt = now;
+        this.updatedAt = now;
+    }
+
+    @PreUpdate
+    void onUpdate() {
+        this.updatedAt = Instant.now();
+    }
 
     @Transient
     public String getFullName() {

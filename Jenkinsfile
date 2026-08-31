@@ -29,7 +29,9 @@ pipeline {
                 }
             }
             steps {
-                sh 'mvn -B test'
+                // Integration tests require a database and run in dedicated flows.
+                // Keep CI gate fast/reliable here with unit tests only.
+                sh 'mvn -B test "-Dtest=*Test,!*IntegrationTest"'
             }
             post {
                 always {

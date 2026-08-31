@@ -1,9 +1,7 @@
 package com.attendance.api.config;
 
-import com.attendance.api.security.JwtAccessDeniedHandler;
-import com.attendance.api.security.JwtAuthenticationEntryPoint;
-import com.attendance.api.security.JwtAuthenticationFilter;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,7 +18,11 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.List;
+import com.attendance.api.security.JwtAccessDeniedHandler;
+import com.attendance.api.security.JwtAuthenticationEntryPoint;
+import com.attendance.api.security.JwtAuthenticationFilter;
+
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
@@ -30,6 +32,7 @@ import java.util.List;
 public class SecurityConfig {
 
     private static final String[] PUBLIC_PATHS = {
+            "/",
             "/api/v1/auth/login",
             "/api/v1/auth/refresh",
             "/api/v1/auth/register-organization",
